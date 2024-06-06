@@ -1,0 +1,26 @@
+.prof-info {
+    margin-left: 75.6px;
+    height: 78.1vh;
+}
+
+/* Estilos responsivos */
+@media (max-width: 1200px) {
+    .prof-info {
+        margin-left: 50px;
+        height: 79.5vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .prof-info {
+        margin-left: 25px; 
+        height: 80.9vh; 
+    }
+}
+
+@media (max-width: 480px) {
+    .prof-info {
+        margin-left: 10px; 
+        height: 82.3vh; 
+    }
+}
