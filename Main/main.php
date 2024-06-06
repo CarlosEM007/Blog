@@ -4,7 +4,6 @@ include 'process_main.php';
 $posts = isset($_SESSION['posts']) ? $_SESSION['posts'] : array();
 $error = isset($_SESSION['error']) ? $_SESSION['error'] : null;
 
-
 unset($_SESSION['posts']);
 unset($_SESSION['error']);
 ?>
@@ -31,10 +30,12 @@ unset($_SESSION['error']);
         <?php endif; ?>
         <?php if (!empty($posts)): ?>
             <?php foreach ($posts as $post): ?>
-                <div class="content-box">
-                    <h5 class="content-title"><?php echo htmlspecialchars($post['titulo']); ?></h5>
-                    <p class="content-text"><?php echo nl2br(htmlspecialchars($post['resumo'])); ?></p>
-                </div>
+                <a href="post_page.php?id_post=<?php echo htmlspecialchars($post['id_post']); ?>">
+                    <div class="content-box">
+                        <h5 class="content-title"><?php echo htmlspecialchars($post['titulo']); ?></h5>
+                        <p class="content-text"><?php echo nl2br(html_entity_decode($post['resumo'])); ?></p>
+                    </div>
+                </a>
             <?php endforeach; ?>
         <?php else: ?>
             <p>Nenhum post encontrado.</p>
