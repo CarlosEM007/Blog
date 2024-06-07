@@ -20,4 +20,4 @@ jobs:
         REMOTE_HOST: ec2-3-89-243-205.compute-1.amazonaws.com
         REMOTE_USER: ubuntu
         TARGET: "/home/ubuntu"
-        EXCLUDE: "/dist/, /node_modules/, **.env, rebuild_app.sh, watcher.sh"
+        
