@@ -18,8 +18,18 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ec2-3-89-243-205.compute-1.amazonaws.com >> ~/.ssh/known_hosts
 
+    - name: Verificar formato da chave SSH
+      run: |
+        file ~/.ssh/id_rsa
+
+    - name: Corrigir permissões da chave SSH
+      run: |
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Testar conexão SSH
+      run: |
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@ec2-3-89-243-205.compute-1.amazonaws.com "echo Conexão SSH bem-sucedida"
+
     - name: Copiar arquivos com rsync
       run: |
         rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@ec2-3-89-243-205.compute-1.amazonaws.com:/home/ubuntu
-
-        
