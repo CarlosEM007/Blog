@@ -14,17 +14,9 @@ jobs:
     - name: Configurar chave SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{secrets.EC2_SSH_KEY}}" > ~/.ssh/id_rsa
+        echo "${{secrets.EC2_SSH_KEY}}" | tr -d '\r' > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ec2-3-89-243-205.compute-1.amazonaws.com >> ~/.ssh/known_hosts
-
-    - name: Verificar formato da chave SSH
-      run: |
-        file ~/.ssh/id_rsa
-
-    - name: Corrigir permissões da chave SSH
-      run: |
-        chmod 600 ~/.ssh/id_rsa
 
     - name: Testar conexão SSH
       run: |
@@ -32,4 +24,4 @@ jobs:
 
     - name: Copiar arquivos com rsync
       run: |
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@ec2-3-89-243-205.compute-1.amazonaws.com:/home/ubuntu
+        rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ ubuntu@ec2-3-89-243-205.compute-1.amazonaws.com:/home/ubuntu
