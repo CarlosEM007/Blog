@@ -5,21 +5,38 @@ require_once './Connect/conn.php';
 // Session on
 session_start();
 
+$erros = array();
+
 if(isset($_POST['btn_regis'])){
     $newlogin = $_POST['inp_login'];
     $newemail = $_POST['inp_email'];
     $newpsw = $_POST['inp_password'];
 
     if(!empty($newlogin) && !empty($newemail) && !empty($newpsw)){
-        // Check if email already exists
+        //Verifica Disponibilidade do Email
         $checkEmailSql = "SELECT COUNT(*) FROM usuarios WHERE email = $1";
         $checkEmailResult = pg_prepare($connect, "check_email_query", $checkEmailSql);
         $checkEmailResult = pg_execute($connect, "check_email_query", array($newemail));
+
         $emailCount = pg_fetch_result($checkEmailResult, 0, 0);
 
-        if ($emailCount > 0) {
-            echo "<script>alert('Email já está em uso');</script>";
-        } else {
+        //Verifica Disponibilidade do Login
+        $checkLoginSql = "SELECT COUNT(*) FROM usuarios WHERE login = $1";
+        $checkLoginResult = pg_prepare($connect, "check_login_query", $checkLoginSql);
+        $checkLoginResult = pg_execute($connect, "check_login_query", array($newlogin));
+
+        $loginCount = pg_fetch_result($checkLoginResult, 0, 0);
+
+        if ($emailCount > 0)
+        {
+            $erros[] = "<p class='text-danger'>Email já cadastrado!</p>";
+        }
+        else if($loginCount > 0)
+        {
+            $erros[] = "<p class='text-danger'>Login já cadastrado!</p>";
+        }
+        else
+        {
             // Hash the password
             $hashedPsw = password_hash($newpsw, PASSWORD_DEFAULT);
 
@@ -31,7 +48,6 @@ if(isset($_POST['btn_regis'])){
             $insertResult = pg_execute($connect, "insert_user_query", array($newlogin, $newemail, $hashedPsw));
 
             if ($insertResult) {
-                echo "<script>alert('Registro bem-sucedido');</script>";
                 header("location: index.php");
             } else {
                 echo "<script>alert('Erro ao registrar');</script>";
@@ -58,7 +74,7 @@ if(isset($_POST['btn_regis'])){
 <header>
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./index.php">Broggeragem</a>
+            <a class="navbar-brand" href="./index.php">Bloggeragem</a>
         </div>
     </nav>
 </header>
@@ -67,7 +83,7 @@ if(isset($_POST['btn_regis'])){
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data" class="login-form">
             <h2>Registrar-se</h2>
             <div class="input-container">
-            <label for="inp_login">Login:  </label>
+                <label for="inp_login">Login:  </label>
                 <input name="inp_login" type="text" placeholder="Login">
             </div>
 
@@ -83,16 +99,17 @@ if(isset($_POST['btn_regis'])){
 
             <button name="btn_regis" type="submit" class="btn btn-success">Registrar-se</button>
         </form>
+        <div style="margin-right: 30%;">
+        <?php
+            foreach($erros as $erro){
+                echo $erro;
+            }
+        ?>
+        </div>
 
-        <figure>
-            <blockquote class="blockquote">
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            </blockquote>
-            <figcaption class="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-            </figcaption>
-    </figure>
     </div>
+
+
     
 </body>
 <?php include './Shared/footer.php'; ?>

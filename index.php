@@ -24,7 +24,7 @@ if(isset($_POST['btn_send'])){
                 $_SESSION['logado'] = true;
                 $_SESSION['id_usuario'] = $dados['id'];
                 $_SESSION['nome_usuario'] = $dados['login'];
-                header("location: ./account/profile.php");
+                header("location: ./Account/profile.php");
             } else {
                 $erros[] = "<script>alert('Senha incorreta!');</script>";
             }
@@ -55,7 +55,7 @@ if(isset($_POST['btn_regis'])){
 <header>
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Broggeragem</a>
+    <a class="navbar-brand" href="#">Bloggeragem</a>
   </div>
 </nav>
 </header>

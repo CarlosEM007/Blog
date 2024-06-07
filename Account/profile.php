@@ -27,38 +27,38 @@ $result_plus = pg_execute($connect, "fetch_user_plus_query", array($user_id));
 $user_plus = pg_fetch_assoc($result_plus);
 
 if (!$user_plus) {
-    // Consulta de inserção com espaços em branco nos campos telefone e sobre_mim
-    $sql_insert_plus = "INSERT INTO usuarios_plus (id_usu, telefone, sobre_mim) VALUES ($1, '', '')";
+    //Verifica se há valores no banco de dados
+    $sql_insert_plus = "INSERT INTO usuarios_plus (id_usu, telefone, sobre_mim, nome) VALUES ($1, '', '', '')";
     pg_prepare($connect, "insert_user_plus_query", $sql_insert_plus);
     pg_execute($connect, "insert_user_plus_query", array($user_id));
 }
 
 
-if (isset($_POST['btn_save']))
-{
+if (isset($_POST['btn_save'])) {
     $telefone = $_POST['telefone'];
     $sobre_mim = $_POST['sobre_mim'];
+    $nome = $_POST['nome'];
 
-    $sql_update_plus = "UPDATE usuarios_plus SET telefone = $1, sobre_mim = $2 WHERE id_usu = $3";
+    $sql_update_plus = "UPDATE usuarios_plus SET nome = $1, telefone = $2, sobre_mim = $3 WHERE id_usu = $4";
     pg_prepare($connect, "update_user_plus_query", $sql_update_plus);
-    $result_update = pg_execute($connect, "update_user_plus_query", array($telefone, $sobre_mim, $user_id));
+    $result_update = pg_execute($connect, "update_user_plus_query", array($nome, $telefone, $sobre_mim, $user_id));
 
     if ($result_update) {
         $sucesso = "Informações atualizadas com sucesso!";
-        $user_plus = array("telefone" => $telefone, "sobre_mim" => $sobre_mim);
+        $user_plus = array("telefone" => $telefone, "sobre_mim" => $sobre_mim, "nome" => $nome);
     } else {
         $erros[] = "Erro ao atualizar as informações.";
     }
 }
 
-if (isset($_POST['btn_exit']))
-{
+if (isset($_POST['btn_exit'])) {
     header("location: ../Connect/logout.php");
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,41 +66,54 @@ if (isset($_POST['btn_exit']))
     <link href="../Style/bootstrap.css" rel="stylesheet">
     <link href="../Style/footer.css" rel="stylesheet">
     <link href="../Style/profile.css" rel="stylesheet">
+    <link href="../Style/container-align.css" rel="stylesheet">
 </head>
 
-<header>
-    <?php include '../Shared/navbar.php'; ?>
-</header>
-
 <body>
-    <br><br><br>
-    <div class="prof-info">
-        <h2>Perfil</h2>
-        <p><strong>Nome:</strong> <?php echo htmlspecialchars($user['login']); ?></p>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
-            <label for="telefone">Telefone:</label>
-            <div class="input-container">
-                <input name="telefone" type="text" placeholder="Telefone" value="<?php echo htmlspecialchars($user_plus['telefone'] ?? ''); ?>">
-            </div>
-            <label for="sobre_mim">Sobre mim:</label>
-            <div class="input-container">
-                <textarea name="sobre_mim" placeholder="Sobre mim" maxlength="100"><?php echo htmlspecialchars($user_plus['sobre_mim'] ?? ''); ?></textarea>
-            </div>
-            <button name="btn_save" class="btn btn-primary" type="submit">Salvar</button>
-            <button name="btn_exit" class="btn btn-danger" type="submit">Sair</button>
-        </form>
+    <header>
+        <?php include '../Shared/navbar.php'; ?>
+    </header>
 
-        <?php
-        if ($sucesso) {
-            echo "<p class='text-success'>$sucesso</p>";
-        }
+    <div class="page-container">
+        <br><br><br>
+        <div class="prof-info" class="container">
+            <h2>Perfil</h2>
+            <p><strong>Login:</strong> <?php echo htmlspecialchars($user['login']); ?></p>
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
 
-        foreach ($erros as $erro) {
-            echo "<p class='text-danger'>$erro</p>";
-        }
-        ?>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+
+                <label for="nome">Nome:</label>
+                <div class="input-container">
+                    <input name="nome" placeholder="Nome Verdadeiro" value="<?php echo htmlspecialchars($user_plus['nome'] ?? ''); ?>">
+                </div>
+
+                <label for="telefone">Telefone:</label>
+                <div class="input-container">
+                    <input name="telefone" type="tel" placeholder="55 99123-4567" pattern="[0-9]{2} [0-9]{5}-[0-9]{4}" value="<?php echo htmlspecialchars($user_plus['telefone'] ?? ''); ?>">
+                </div>
+
+                <label for="sobre_mim">Sobre mim:</label>
+                <div class="input-container">
+                    <textarea name="sobre_mim" placeholder="Sobre mim" maxlength="100"><?php echo htmlspecialchars($user_plus['sobre_mim'] ?? ''); ?></textarea>
+                </div>
+                <button name="btn_save" class="btn btn-primary" type="submit">Salvar</button>
+                <button name="btn_exit" class="btn btn-danger" type="submit">Sair</button>
+            </form>
+
+            <?php
+            if ($sucesso) {
+                echo "<p class='text-success'>$sucesso</p>";
+            }
+
+            foreach ($erros as $erro) {
+                echo "<p class='text-danger'>$erro</p>";
+            }
+            ?>
+        </div>
     </div>
-</body>
+
     <?php include '../Shared/footer.php'; ?>
+</body>
+
 </html>

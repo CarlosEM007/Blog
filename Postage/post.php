@@ -26,7 +26,7 @@ unset($_SESSION['erros']);
 </header>
 
 <body>
-    <br><br><br>
+    
     <div class="container">
         <form action="process_post.php" method="post">
             <input type="text" name="inp_titulo" placeholder="Título" maxlength="20" required>
