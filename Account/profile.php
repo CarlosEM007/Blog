@@ -66,7 +66,6 @@ if (isset($_POST['btn_exit'])) {
     <link href="../Style/bootstrap.css" rel="stylesheet">
     <link href="../Style/footer.css" rel="stylesheet">
     <link href="../Style/profile.css" rel="stylesheet">
-    <link href="../Style/container-align.css" rel="stylesheet">
 </head>
 
 <body>
@@ -76,7 +75,7 @@ if (isset($_POST['btn_exit'])) {
 
     <div class="page-container">
         <br><br><br>
-        <div class="prof-info" class="container">
+        <div class="prof-info">
             <h2>Perfil</h2>
             <p><strong>Login:</strong> <?php echo htmlspecialchars($user['login']); ?></p>
             <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
@@ -110,6 +109,7 @@ if (isset($_POST['btn_exit'])) {
                 echo "<p class='text-danger'>$erro</p>";
             }
             ?>
+
         </div>
     </div>
 
