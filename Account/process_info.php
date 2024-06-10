@@ -61,5 +61,5 @@ if (isset($_POST['btn_exit'])) {
     header("location: ../Connect/logout.php");
 }
 
-    header("location: profile.php");
+header("location: profile.php");
 ?>
