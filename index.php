@@ -48,9 +48,12 @@ if(isset($_POST['btn_regis'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloggeragem</title>
+    <link rel="icon" type="image/png" href="./Logo/B.png">
+
     <link href="./Style/bootstrap.css" rel="stylesheet">
     <link href="./Style/container-align.css" rel="stylesheet">
     <link href="./Style/footer.css" rel="stylesheet">
+    
 </head>
 <header>
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">

@@ -29,7 +29,9 @@ if ($post_id) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Post</title>
+    <title>Bloggeragem</title>
+    <link rel="icon" type="image/png" href="../Logo/B.png">
+
     <link href="../Style/bootstrap.css" rel="stylesheet">
     <link href="../Style/footer-page.css" rel="stylesheet">
     <link href="../Style/content.css" rel="stylesheet">
