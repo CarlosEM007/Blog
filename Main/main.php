@@ -13,7 +13,7 @@ unset($_SESSION['error']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <title>Bloggeragem</title>
     <link href="../Style/bootstrap.css" rel="stylesheet">
     <link href="../Style/footer-page.css" rel="stylesheet">
     <link href="../Style/content.css" rel="stylesheet">

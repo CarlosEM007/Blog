@@ -1,18 +1,18 @@
 <?php
-    include 'process_info.php';
-    include 'process_profile.php';
+include 'process_info.php';
+include 'process_profile.php';
 
-    $user = $_SESSION['user'];
-    $user_plus = $_SESSION['user_plus'];
+$user = $_SESSION['user'];
+$user_plus = $_SESSION['user_plus'];
 
-    $postsT = $_SESSION['postsT'];
-    $postsF = $_SESSION['postsF'];
+$postsT = $_SESSION['postsT'];
+$postsF = $_SESSION['postsF'];
 
-    $sucesso = isset($_SESSION['sucesso']) ? $_SESSION['sucesso'] : array();
-    $error = isset($_SESSION['error']) ? $_SESSION['error'] : null;
+$sucesso = isset($_SESSION['sucesso']) ? $_SESSION['sucesso'] : array();
+$error = isset($_SESSION['error']) ? $_SESSION['error'] : null;
 
-    unset($_SESSION['sucesso']);
-    unset($_SESSION['error']);
+unset($_SESSION['sucesso']);
+unset($_SESSION['error']);
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Bloggeragem</title>
     <link href="../Style/bootstrap.css" rel="stylesheet">
     <link href="../Style/footer.css" rel="stylesheet">
     <link href="../Style/profile.css" rel="stylesheet">
@@ -77,37 +77,39 @@
                 <div class="flex-item">
                     <h1>Suas Postagens</h1>
                     <div class="post-container">
-                        <?php if (!empty($postsT)): ?>
-                            <?php foreach ($postsT as $post): ?>
+                        <?php if (!empty($postsT)) : ?>
+                            <?php foreach ($postsT as $post) : ?>
                                 <div class="post-info">
                                     <a href="../Main/post_page.php?id_post=<?php echo htmlspecialchars($post['id_post']); ?>">
                                         <h3><?php echo htmlspecialchars($post['titulo']); ?></h3>
                                     </a>
                                 </div>
                             <?php endforeach; ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <p>Nenhum post publicado.</p>
                         <?php endif; ?>
                     </div>
                     <hr>
                     <h1>Seus rascunhos</h1>
                     <div class="post-container">
-                        <?php if (!empty($postsF)): ?>
-                            <?php foreach ($postsF as $post): ?>
+                        <?php if (!empty($postsF)) : ?>
+                            <?php foreach ($postsF as $post) : ?>
                                 <div class="post-info">
-                                    <a href="">
+                                    <a href="../Postage/post.php?id_post=<?php echo htmlspecialchars($post['id_post']); ?>">
                                         <h3><?php echo htmlspecialchars($post['titulo']) ?></h3>
                                     </a>
                                 </div>
                             <?php endforeach; ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <p>Nenhum Rascunho salvo.</p>
                         <?php endif; ?>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </body>
 <?php include '../Shared/footer.php'; ?>
+
 </html>

@@ -47,7 +47,7 @@ if(isset($_POST['btn_regis'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Bloggeragem</title>
     <link href="./Style/bootstrap.css" rel="stylesheet">
     <link href="./Style/container-align.css" rel="stylesheet">
     <link href="./Style/footer.css" rel="stylesheet">
@@ -76,13 +76,21 @@ if(isset($_POST['btn_regis'])){
         </form>
 
         <figure>
-            <blockquote class="blockquote">
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            </blockquote>
-            <figcaption class="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-            </figcaption>
-        </figure>
+    <?php
+    // Fazendo a consulta SQL para obter uma frase aleatória
+    $query = "SELECT * FROM frases_massa ORDER BY RANDOM() LIMIT 1";
+    $result = pg_query($connect, $query);
+    $frase = pg_fetch_assoc($result);
+    
+    // Exibindo a frase dentro do bloco de citação
+    ?>
+    <blockquote class="blockquote">
+        <p class="mb-0"><em>"<?php echo $frase['frase']; ?>"</em></p>
+    </blockquote>
+    <figcaption class="blockquote-footer">
+        Por <cite title="Source Title"><?php echo $frase['dono']; ?></cite>
+    </figcaption>
+</figure>
     </div>
 
     <?php

@@ -66,7 +66,7 @@ if(isset($_POST['btn_regis'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar-se</title>
+    <title>Bloggeragem</title>
     <link href="./Style/bootstrap.css" rel="stylesheet">
     <link href="./Style/container-align.css" rel="stylesheet">
     <link href="./Style/footer.css" rel="stylesheet">
